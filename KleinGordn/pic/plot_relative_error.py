@@ -2,22 +2,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# 读取CSV文件
+# Read CSV files
 df = pd.read_csv('relative_errors.csv')
 
-# 将 'network_structure' 转换为有特定顺序的分类类型
+# Convert 'network_structure' to a classification type with a specific order
 network_order = ["3x30", "3x50", "3x70", "3x90", "5x30", "5x50", "5x70", "5x90", "7x30", "7x50", "7x70", "7x90"]
 df['network_structure'] = pd.Categorical(df['network_structure'], categories=network_order, ordered=True)
 
-# 定义每个模型类型的标记和线型
+#Define tags and line types for each model type
 markers = {"PINN": "o", "IFNN-PINN": "s", "A-PINN": "D", "H-PINN": "^"}
 linestyles = {"PINN": ":", "IFNN-PINN": "--", "A-PINN": "-.", "H-PINN": "-"}
 
-# 设置绘图风格
+# Setting the drawing style
 sns.set(style="whitegrid")
 
-# 创建折线图
-plt.figure(figsize=(12, 8), dpi=300)  # 提高分辨率
+# Create a line chart
+plt.figure(figsize=(12, 8), dpi=300)
 
 for model_type, marker in markers.items():
     linestyle = linestyles[model_type]
@@ -32,7 +32,7 @@ for model_type, marker in markers.items():
         linewidth=2.5
     )
 
-# 设置字体和标签
+# Set fonts and labels
 plt.xlabel("Network Structure", fontsize=14, fontname='Arial')
 plt.ylabel("Relative Error", fontsize=14, fontname='Arial')
 plt.yscale('log')
@@ -41,14 +41,10 @@ plt.yticks(fontsize=12, fontname='Arial')
 plt.legend(title='Model Type', fontsize=12, title_fontsize=14, loc='upper right', frameon=False)
 plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 
-# 调整图例位置
 plt.legend(loc='upper right')
 
-# 设置紧凑布局
 plt.tight_layout()
 
-# 保存图表
+#Saving the fig
 plt.savefig('Relative_Error_Comparison_for_Different_Network_Structures_and_Models.pdf')
-
-# 显示图表
 plt.show()
